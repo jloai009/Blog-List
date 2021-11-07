@@ -2,13 +2,8 @@
 const express = require('express')
 const cors = require('cors')
 const Blog = require('./models/blog')
-const mongoose = require('mongoose')
-const { MONGODB_URI, PORT } = require('./utils/config')
+const PORT = require('./utils/config').PORT
 const app = express()
-
-const mongoUrl = MONGODB_URI
-mongoose
-  .connect(mongoUrl)
 
 app.use(cors())
 app.use(express.json())
