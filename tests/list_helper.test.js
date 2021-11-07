@@ -102,5 +102,29 @@ describe('favorite blog', () => {
     () => {
       const result = listHelper.favoriteBlog(blogs)
       expect(result.likes).toBe(12)
-    })
+    }
+  )
+})
+
+describe('mostBlogs', () => {
+  test('when list is empty, returns { "author": null, "blogs": 0 }', () => {
+    const result = listHelper.mostBlogs([])
+    expect(result.author).toBe(null)
+    expect(result.blogs).toBe(0)
+  })
+
+  test(
+    'when list has only one blog, returns { "author": blog.author, "blogs": 1 }',
+    () => {
+      const result = listHelper.mostBlogs(listWithOneBlog)
+      expect(result.author).toBe(listWithOneBlog[0].author)
+      expect(result.blogs).toBe(1)
+    }
+  )
+
+  test('when list has many blogs, returns the expected object', () => {
+    const result = listHelper.mostBlogs(blogs)
+    expect(result.author).toBe('Robert C. Martin')
+    expect(result.blogs).toBe(3)
+  })
 })
