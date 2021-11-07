@@ -2,12 +2,12 @@
 const express = require('express')
 const cors = require('cors')
 const Blog = require('./models/blog')
-const { Mongoose } = require('mongoose')
+const mongoose = require('mongoose')
 const { MONGODB_URI, PORT } = require('./utils/config')
-const app = require('../Node.js and Express Exercises/NotesApp backend/app')
+const app = express()
 
 const mongoUrl = MONGODB_URI
-Mongoose.connect(mongoUrl)
+mongoose.connect(mongoUrl)
 
 app.use(cors())
 app.use(express.json())
