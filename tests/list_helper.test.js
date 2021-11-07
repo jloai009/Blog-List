@@ -1,12 +1,5 @@
 const listHelper = require('../utils/list_helper')
 
-test('dummy returns one', () => {
-  const blogs = []
-
-  const result = listHelper.dummy(blogs)
-  expect(result).toBe(1)
-})
-
 const listWithOneBlog = [
   {
     _id: '5a422aa71b54a676234d17f8',
@@ -126,5 +119,28 @@ describe('mostBlogs', () => {
     const result = listHelper.mostBlogs(blogs)
     expect(result.author).toBe('Robert C. Martin')
     expect(result.blogs).toBe(3)
+  })
+})
+
+describe('mostLikes', () => {
+  test('when list is empty, returns { "author": null, "likes": 0 }', () => {
+    const result = listHelper.mostLikes([])
+    expect(result.author).toBe(null)
+    expect(result.likes).toBe(0)
+  })
+
+  test(
+    'when list has only one blog, returns { "author": blog.author, "blogs": blog.likes }',
+    () => {
+      const result = listHelper.mostLikes(listWithOneBlog)
+      expect(result.author).toBe(listWithOneBlog[0].author)
+      expect(result.likes).toBe(listWithOneBlog[0].likes)
+    }
+  )
+
+  test('when list has many blogs, returns the expected object', () => {
+    const result = listHelper.mostLikes(blogs)
+    expect(result.author).toBe('Edsger W. Dijkstra')
+    expect(result.likes).toBe(17)
   })
 })
