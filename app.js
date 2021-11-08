@@ -1,5 +1,6 @@
 const MONGODB_URI = require('./utils/config').MONGODB_URI
 const express = require('express')
+require('express-async-errors')
 const app = express()
 const cors = require('cors')
 const blogsRouter = require('./controllers/blogs')
