@@ -8,9 +8,7 @@ const Blog = require('../models/blog')
 
 beforeEach(async () => {
   await Blog.deleteMany({})
-  const blogObjects = helper.blogs.map(blog => new Blog(blog))
-  const promiseArray = blogObjects.map(blog => blog.save())
-  await Promise.all(promiseArray)
+  await Blog.insertMany(helper.listWithBlogs)
 })
 
 test('blogs are returned as json', async () => {
@@ -22,7 +20,7 @@ test('blogs are returned as json', async () => {
 
 test('all blogs are returned with GET', async () => {
   const response = await api.get('/api/blogs')
-  expect(response.body).toHaveLength(helper.blogs.length)
+  expect(response.body).toHaveLength(helper.listWithBlogs.length)
 })
 
 test('all blogs have an id property', async () => {
@@ -49,7 +47,7 @@ test('POST request creates a new blog', async () => {
   let blogs = await Blog.find({})
   blogs = blogs.map(blog => blog.toJSON())
 
-  expect(blogs).toHaveLength(helper.blogs.length + 1)
+  expect(blogs).toHaveLength(helper.listWithBlogs.length + 1)
 
   const titles = blogs.map(n => n.title)
 
@@ -86,7 +84,7 @@ test('blog without title is not added', async () => {
   let blogs = await Blog.find({})
   blogs = blogs.map(blog => blog.toJSON())
 
-  expect(blogs).toHaveLength(helper.blogs.length)
+  expect(blogs).toHaveLength(helper.listWithBlogs.length)
 })
 
 test('blog without url is not added', async () => {
@@ -104,7 +102,7 @@ test('blog without url is not added', async () => {
   let blogs = await Blog.find({})
   blogs = blogs.map(blog => blog.toJSON())
 
-  expect(blogs).toHaveLength(helper.blogs.length)
+  expect(blogs).toHaveLength(helper.listWithBlogs.length)
 })
 
 afterAll(() => {
