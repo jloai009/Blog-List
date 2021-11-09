@@ -74,6 +74,26 @@ test('POST request creates a new blog', async () => {
   )
 })
 
+test('POST request fails when unauthorized', async () => {
+  const newBlog = {
+    title: 'Hello World',
+    author: 'Jose',
+    url: 'Test',
+    likes: 3
+  }
+
+  await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .expect(401)
+    .expect('Content-Type', /application\/json/)
+
+  let blogs = await Blog.find({})
+  blogs = blogs.map(blog => blog.toJSON())
+
+  expect(blogs).toHaveLength(helper.listWithBlogs.length)
+})
+
 test('The likes property of a blog a default of 0', async () => {
   const newBlog = {
     title: 'Hello World',
