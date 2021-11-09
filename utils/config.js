@@ -5,8 +5,6 @@ const MONGODB_URI = process.env.NODE_ENV === 'test'
   ? process.env.TEST_MONGODB_URI
   : process.env.MONGODB_URI
 
-console.log('Running app in', process.env.NODE_ENV, 'mode')
-
 module.exports = {
   MONGODB_URI,
   PORT
