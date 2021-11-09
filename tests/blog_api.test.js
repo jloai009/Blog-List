@@ -1,14 +1,31 @@
 const supertest = require('supertest')
 const mongoose = require('mongoose')
+const bcrypt = require('bcrypt')
 const helper = require('./test_helper')
 const app = require('../app')
 const api = supertest(app)
 
 const Blog = require('../models/blog')
+const User = require('../models/user')
 
 beforeEach(async () => {
   await Blog.deleteMany({})
   await Blog.insertMany(helper.listWithBlogs)
+})
+
+let token = null
+beforeAll(async () => {
+  await User.deleteMany({})
+
+  const passwordHash = await bcrypt.hash('sekret', 10)
+  const user = new User({ username: 'root', passwordHash })
+
+  await user.save()
+
+  const response = await api
+    .post('/api/login')
+    .send({ username: 'root', password: 'sekret' })
+  token = response.body.token
 })
 
 test('blogs are returned as json', async () => {
@@ -40,6 +57,7 @@ test('POST request creates a new blog', async () => {
 
   await api
     .post('/api/blogs')
+    .set('Authorization', 'bearer ' + token)
     .send(newBlog)
     .expect(201)
     .expect('Content-Type', /application\/json/)
@@ -65,6 +83,7 @@ test('The likes property of a blog a default of 0', async () => {
 
   const response = await api
     .post('/api/blogs')
+    .set('Authorization', 'bearer ' + token)
     .send(newBlog)
 
   expect(response.body.likes).toBe(0)
@@ -78,6 +97,7 @@ test('blog without title is not added', async () => {
 
   await api
     .post('/api/blogs')
+    .set('Authorization', 'bearer ' + token)
     .send(newBlog)
     .expect(400)
 
@@ -96,6 +116,7 @@ test('blog without url is not added', async () => {
 
   await api
     .post('/api/blogs')
+    .set('Authorization', 'bearer ' + token)
     .send(newBlog)
     .expect(400)
 
