@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import Blog from './components/Blog'
 import LoginForm from './components/LoginForm'
+import Showblogs from './components/Showblogs'
+import Header from './components/Header'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
@@ -51,32 +52,16 @@ const App = () => {
     setUser(null)
   }
 
-  const Header = () => (
-    <div>
-      <h2>Blog-List</h2>
-      <div>
-        <p>{user.name} logged in <button onClick={handleLogout}>Logout</button></p>
-      </div>
-    </div>
-  )
-
-  const Showblogs = () => (
-    <div>
-      {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
-      )}
-    </div>
-  )
-
   const loginFormProps = { username, setUsername, password, setPassword, handleLogin }
+  const headerProps = { user, handleLogout }
 
   return (
     <div>
       {user
         ?
         <>
-          <Header />
-          <Showblogs />
+          <Header {...headerProps}/>
+          <Showblogs blogs={blogs}/>
         </>
         :
         <LoginForm {...loginFormProps} />
