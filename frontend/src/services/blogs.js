@@ -21,7 +21,6 @@ const create = async newObject => {
     const response = await axios.post(baseUrl, newObject, config)
     return response.data
   } catch (error) {
-    console.error('Attempted to create invalid blog')
     return 400
   }
 
