@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import LoginForm from './components/LoginForm'
-import Showblogs from './components/Showblogs'
 import Header from './components/Header'
+import Content from './components/Content'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
@@ -52,18 +52,18 @@ const App = () => {
     setUser(null)
   }
 
-  const loginFormProps = { username, setUsername, password, setPassword, handleLogin }
+  
   const headerProps = { user, handleLogout }
+  const contentProps = { blogs, setBlogs }
+  const loginFormProps = { username, setUsername, password, setPassword, handleLogin }
 
   return (
     <div>
-      {user
-        ?
-        <>
+      {user ?
+        <div>
           <Header {...headerProps}/>
-          <Showblogs blogs={blogs}/>
-        </>
-        :
+          <Content {...contentProps} />
+        </div> :
         <LoginForm {...loginFormProps} />
       }
     </div>
