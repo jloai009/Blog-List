@@ -7,6 +7,8 @@ import loginService from './services/login'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
+  const [notification, setNotification] = useState(null)
+  const [errorOcurred, setErrorOcurred] = useState(false)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
@@ -18,12 +20,18 @@ const App = () => {
   }, [])
 
   useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem('loggedBloglistUser')
-    if (loggedUserJSON) {
-      const user = JSON.parse(loggedUserJSON)
-      setUser(user)
-      blogService.setToken(user.token)
+    try {
+      const loggedUserJSON = window.localStorage.getItem('loggedBloglistUser')
+      if (loggedUserJSON) {
+        const user = JSON.parse(loggedUserJSON)
+        setUser(user)
+        blogService.setToken(user.token)
+      }
+    } catch (error) {
+      window.localStorage.clear()
+      window.location.reload()
     }
+
   }, [])
 
   const handleLogin = async (event) => {
@@ -39,11 +47,19 @@ const App = () => {
       )
       blogService.setToken(user.token)
       setUser(user)
-      console.log(user)
       setUsername('')
       setPassword('')
+      setNotification('Welcome Back ' + user.username)
+      setTimeout(() => {
+        setNotification(null)
+      }, 5000)
     } catch (exception) {
-      console.error('Wrong credentials')
+      setNotification('Wrong username or password')
+      setErrorOcurred(true)
+      setTimeout(() => {
+        setNotification(null)
+        setErrorOcurred(false)
+      }, 5000)
     }
   }
 
@@ -53,9 +69,14 @@ const App = () => {
   }
 
   
-  const headerProps = { user, handleLogout }
-  const contentProps = { blogs, setBlogs }
-  const loginFormProps = { username, setUsername, password, setPassword, handleLogin }
+  const headerProps = { notification, errorOcurred, user, handleLogout }
+  const contentProps = { blogs, setBlogs, setNotification, setErrorOcurred }
+  const loginFormProps = {
+    notification, errorOcurred,
+    username, setUsername,
+    password, setPassword,
+    handleLogin
+  }
 
   return (
     <div>
