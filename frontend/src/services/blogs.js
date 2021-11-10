@@ -12,8 +12,24 @@ const getAll = () => {
   return request.then(response => response.data)
 }
 
+const create = async newObject => {
+  const config = {
+    headers: { Authorization: token },
+  }
+
+  try {
+    const response = await axios.post(baseUrl, newObject, config)
+    return response.data
+  } catch (error) {
+    console.error('Attempted to create invalid blog')
+    return 400
+  }
+
+}
+
 // eslint-disable-next-line
 export default {
   getAll,
-  setToken
+  setToken,
+  create
 }
