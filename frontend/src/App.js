@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Blog from './components/Blog'
+import LoginForm from './components/LoginForm'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
@@ -45,61 +46,40 @@ const App = () => {
     }
   }
 
-  const loginForm = () => (
-    <div>
-      <h2>Log in to Blog-List</h2>
-      <form onSubmit={handleLogin}>
-        <div>
-          <label>Username: </label>
-          <input
-            type="text"
-            value={username}
-            name="Username"
-            onChange={({ target }) => {
-              setUsername(target.value)
-              console.log(target.value)
-            }}
-          />
-        </div>
-        <div>
-          <label>Password: </label>
-          <input
-            type="password"
-            value={password}
-            name="Password"
-            onChange={({ target }) => {
-              setPassword(target.value)
-              console.log(target.value)
-            }}
-          />
-        </div>
-        <button type="submit">Login</button>
-      </form>
-    </div>
-  )
-
   const handleLogout = () => {
     window.localStorage.removeItem('loggedBloglistUser')
     setUser(null)
   }
 
+  const Header = () => (
+    <div>
+      <h2>Blog-List</h2>
+      <div>
+        <p>{user.name} logged in <button onClick={handleLogout}>Logout</button></p>
+      </div>
+    </div>
+  )
+
+  const Showblogs = () => (
+    <div>
+      {blogs.map(blog =>
+        <Blog key={blog.id} blog={blog} />
+      )}
+    </div>
+  )
+
+  const loginFormProps = { username, setUsername, password, setPassword, handleLogin }
+
   return (
     <div>
       {user
         ?
-        <div>
-          <h2>Blog-List</h2>
-          <div>
-            <p>{user.name} logged in <button onClick={handleLogout}>Logout</button></p>
-          </div>
-          <div>
-            {blogs.map(blog =>
-              <Blog key={blog.id} blog={blog} />
-            )}
-          </div>
-        </div>
+        <>
+          <Header />
+          <Showblogs />
+        </>
         :
-        loginForm()
+        <LoginForm {...loginFormProps} />
       }
     </div>
   )
