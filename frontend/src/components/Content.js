@@ -1,12 +1,20 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import CreateNew from "./CreateNew"
 import Showblogs from "./Showblogs"
 import blogService from "../services/blogs"
 
 const Content = (props) => {
+const [blogs, setBlogs] = useState([])
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
+
+
+  useEffect(() => {
+    blogService.getAll().then(blogs =>
+      setBlogs( blogs )
+    )
+  }, [])
 
   const handleCreateNew = async (event) => {
     event.preventDefault()
@@ -17,15 +25,15 @@ const Content = (props) => {
       url: url
     }
 
-    const newBlog = await blogService.create(blogObject)
-    if (newBlog !== 400) {
-      props.setBlogs(props.blogs.concat(newBlog))
+    const response = await blogService.create(blogObject)
+    if (response.status === 201) {
+      setBlogs(blogs.concat(response.data))
       props.handleNotification("Blog Created")
       setTitle('')
       setAuthor('')
       setUrl('')
     } else {
-      props.handleNotification("Error: blogs must have a title and a URL", "Error")
+      props.handleNotification(response.error, "Error")
     }
   }
 
@@ -36,10 +44,12 @@ const Content = (props) => {
     handleCreateNew
   }
 
+  const showblogsProps = { blogs }
+
   return (
     <div>
       <CreateNew {...createNewProps}/>
-      <Showblogs blogs={props.blogs}/>
+      <Showblogs {...showblogsProps}/>
     </div>
     
   )
