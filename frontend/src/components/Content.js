@@ -6,14 +6,35 @@ import blogService from "../services/blogs"
 const Content = (props) => {
   const [blogs, setBlogs] = useState([])
 
+  const setBlogsSorted = (blogs) => {
+    setBlogs(blogs.sort((a, b) => b.likes - a.likes))
+  }
+
   useEffect(() => {
     blogService.getAll().then(blogs =>
-      setBlogs( blogs )
+      setBlogsSorted( blogs )
     )
   }, [])
 
+  const handleLike = async (id) => {
+    const blog = blogs.find(b => b.id === id)
+
+    const likedBlog = {
+      ...blog,
+      likes: blog.likes + 1,
+      user: blog.user.id
+    }
+
+    try {
+      const returnedBlog = await blogService.put(id, likedBlog)
+      setBlogsSorted(blogs.map(blog => blog.id !== id ? blog : returnedBlog))
+    } catch (error) {
+      props.handleNotification('There was an error liking the blog', 'Error')
+    }
+  }
+
   const createNewProps = { blogs, setBlogs, handleNotification: props.handleNotification }
-  const showblogsProps = { blogs }
+  const showblogsProps = { blogs, handleLike }
 
   return (
     <div>
