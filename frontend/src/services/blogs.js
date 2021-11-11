@@ -29,9 +29,26 @@ const create = async newObject => {
 
 }
 
+const put = async (id, newObject) => {
+
+  const config = {
+    headers: { Authorization: token },
+  }
+
+  const url = baseUrl + '/' + id
+
+  try {
+    const response = await axios.put(url, newObject, config)
+    return response.data
+  } catch (error) {
+    console.error('Error updating blog with id ' + id)
+  }
+}
+
 // eslint-disable-next-line
 export default {
   getAll,
   setToken,
-  create
+  create,
+  put
 }
