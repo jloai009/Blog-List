@@ -34,6 +34,20 @@ const App = () => {
 
   }, [])
 
+  const handleNotification = (notification, isError=false) => {
+    setNotification(notification)
+    setTimeout(() => {
+        setNotification(null)
+      }, 5000)
+    
+    if (isError) {
+      setErrorOcurred(true)
+      setTimeout(() => {
+        setErrorOcurred(false)
+      }, 5000)
+    }
+  }
+
   const handleLogin = async (event) => {
     event.preventDefault()
 
@@ -49,17 +63,9 @@ const App = () => {
       setUser(user)
       setUsername('')
       setPassword('')
-      setNotification('Welcome Back ' + user.username)
-      setTimeout(() => {
-        setNotification(null)
-      }, 5000)
+      handleNotification('Welcome Back ' + user.username)
     } catch (exception) {
-      setNotification('Wrong username or password')
-      setErrorOcurred(true)
-      setTimeout(() => {
-        setNotification(null)
-        setErrorOcurred(false)
-      }, 5000)
+      handleNotification('Wrong username or password', "Error")
     }
   }
 
