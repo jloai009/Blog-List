@@ -5,6 +5,7 @@ const CreateNew = (props) => {
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
+  const [hideForm, setHideForm] = useState(false)
 
   const handleCreateNew = async (event) => {
     event.preventDefault()
@@ -19,12 +20,28 @@ const CreateNew = (props) => {
     if (response.status === 201) {
       props.setBlogs(props.blogs.concat(response.data))
       props.handleNotification("Blog Created")
+      setHideForm(true)
       setTitle('')
       setAuthor('')
       setUrl('')
     } else {
       props.handleNotification(response.message, "Error")
     }
+  }
+
+  const changeVisPrevDef = (event) => {
+    event.preventDefault()
+    setHideForm(!hideForm)
+  }
+
+  if (hideForm) {
+    return (
+      <div>
+        <button onClick={changeVisPrevDef}>
+          Create New Blog
+        </button>
+      </div>
+    )
   }
 
   return (
@@ -58,7 +75,10 @@ const CreateNew = (props) => {
             onChange={({ target }) => { setUrl(target.value) }}
           />
         </div>
-        <button type="submit">Create</button>
+        <div>
+          <button type="submit">Create</button>
+          <button onClick={changeVisPrevDef}>Cancel</button>
+        </div>
       </form>
     </div>
   )
