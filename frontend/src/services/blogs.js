@@ -19,9 +19,12 @@ const create = async newObject => {
 
   try {
     const response = await axios.post(baseUrl, newObject, config)
-    return response.data
+    return response
   } catch (error) {
-    return 400
+    return {
+      error: "Blogs must have a title and a URL",
+      status: 400
+    }
   }
 
 }
