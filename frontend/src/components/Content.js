@@ -33,8 +33,29 @@ const Content = (props) => {
     }
   }
 
+  const handleDelete = async (blog) => {
+
+    const userConfirmation = window.confirm('Deleting ' + blog.title + '?')
+    if (!userConfirmation) {
+      return
+    }
+
+    const id = blog.id
+
+    try {
+      const response = await blogService._delete(id)
+      if (response.status === 204) {
+        setBlogs(blogs.filter(blog => blog.id !== id))
+      } else {
+        throw new Error()
+      }
+    } catch (error) {
+      props.handleNotification('There was an error Deleting the blog', 'Error')
+    }
+  }
+
   const createNewProps = { blogs, setBlogs, handleNotification: props.handleNotification }
-  const showblogsProps = { blogs, handleLike }
+  const showblogsProps = { blogs, handleLike, handleDelete, user: props.user }
 
   return (
     <div>
