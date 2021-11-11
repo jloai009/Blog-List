@@ -3,6 +3,11 @@ import Notification from "./Notification"
 
 const Header = (props) => {
 
+  const handleLogout = () => {
+    window.localStorage.removeItem('loggedBloglistUser')
+    props.setUser(null)
+  }
+
   return (
     <div>
       <h2>Blog-List</h2>
@@ -10,7 +15,7 @@ const Header = (props) => {
       <div>
         <p>
           {props.user.name} logged in&nbsp;
-          <button onClick={props.handleLogout}>Logout</button>
+          <button onClick={handleLogout}>Logout</button>
         </p>
       </div>
     </div>
