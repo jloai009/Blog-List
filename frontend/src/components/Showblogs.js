@@ -1,10 +1,10 @@
 import React from "react"
 import Blog from "./Blog"
 
-const Showblogs = ({ blogs }) => (
+const Showblogs = (props) => (
   <div>
-    {blogs.map(blog =>
-      <Blog key={blog.id} blog={blog} />
+    {props.blogs.map(blog =>
+      <Blog key={blog.id} blog={blog} handleLike={props.handleLike} />
     )}
   </div>
 )
