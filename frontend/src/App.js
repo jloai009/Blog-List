@@ -63,13 +63,8 @@ const App = () => {
     }
   }
 
-  const handleLogout = () => {
-    window.localStorage.removeItem('loggedBloglistUser')
-    setUser(null)
-  }
-
   const notificationProps = { notification, errorOcurred }
-  const headerProps = { notificationProps, user, handleLogout }
+  const headerProps = { user, setUser, notificationProps }
   const contentProps = { handleNotification }
   const loginFormProps = {
     notificationProps,
