@@ -6,18 +6,12 @@ import blogService from './services/blogs'
 import loginService from './services/login'
 
 const App = () => {
-  const [blogs, setBlogs] = useState([])
+
   const [notification, setNotification] = useState(null)
   const [errorOcurred, setErrorOcurred] = useState(false)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
-
-  useEffect(() => {
-    blogService.getAll().then(blogs =>
-      setBlogs( blogs )
-    )  
-  }, [])
 
   useEffect(() => {
     try {
@@ -76,7 +70,7 @@ const App = () => {
 
   const notificationProps = { notification, errorOcurred }
   const headerProps = { notificationProps, user, handleLogout }
-  const contentProps = { blogs, setBlogs, handleNotification }
+  const contentProps = { handleNotification }
   const loginFormProps = {
     notificationProps,
     username, setUsername,
