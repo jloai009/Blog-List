@@ -22,7 +22,7 @@ const create = async newObject => {
     return response
   } catch (error) {
     return {
-      error: "Blogs must have a title and a URL",
+      message: 'Error: Title and URL are required',
       status: 400
     }
   }
