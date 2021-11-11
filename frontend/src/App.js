@@ -42,7 +42,7 @@ const App = () => {
 
   const notificationProps = { notification, errorOcurred }
   const headerProps = { user, setUser, notificationProps }
-  const contentProps = { handleNotification }
+  const contentProps = { handleNotification, user }
   const loginFormProps = {
     notificationProps,
     handleNotification,
