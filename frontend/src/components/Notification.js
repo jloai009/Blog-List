@@ -13,8 +13,7 @@ const Notification = (props) => {
     borderRadius: 4,
     backgroundColor: 'silver',
     padding: 9,
-    fontSize: 20,
-    width: 330
+    fontSize: 20
   }
 
   return (
