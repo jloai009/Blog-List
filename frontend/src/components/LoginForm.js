@@ -3,12 +3,10 @@ import Notification from "./Notification"
 
 const LoginForm = (props) => {
 
-  const notificationProps = { notification: props.notification, errorOcurred: props.errorOcurred }
-
   return (
     <div>
       <h2>Log in to Blog-List</h2>
-      <Notification {...notificationProps} />
+      <Notification {...props.notificationProps} />
       <form onSubmit={props.handleLogin}>
         <div>
           <label>Username: </label>
