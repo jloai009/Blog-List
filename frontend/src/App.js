@@ -74,11 +74,11 @@ const App = () => {
     setUser(null)
   }
 
-  
-  const headerProps = { notification, errorOcurred, user, handleLogout }
-  const contentProps = { blogs, setBlogs, setNotification, setErrorOcurred }
+  const notificationProps = { notification, errorOcurred }
+  const headerProps = { notificationProps, user, handleLogout }
+  const contentProps = { blogs, setBlogs, handleNotification }
   const loginFormProps = {
-    notification, errorOcurred,
+    notificationProps,
     username, setUsername,
     password, setPassword,
     handleLogin
