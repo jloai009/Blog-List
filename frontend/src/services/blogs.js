@@ -45,10 +45,26 @@ const put = async (id, newObject) => {
   }
 }
 
+const _delete = async (id) => {
+  const config = {
+    headers: { Authorization: token },
+  }
+
+  const url = baseUrl + '/' + id
+
+  try {
+    const response = await axios.delete(url, config)
+    return response
+  } catch (error) {
+    console.error('Error deleting blog with id ' + id)
+  }
+}
+
 // eslint-disable-next-line
 export default {
   getAll,
   setToken,
   create,
-  put
+  put,
+  _delete
 }
