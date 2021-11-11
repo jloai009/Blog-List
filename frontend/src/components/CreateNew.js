@@ -5,7 +5,7 @@ const CreateNew = (props) => {
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
-  const [hideForm, setHideForm] = useState(false)
+  const [hideForm, setHideForm] = useState(true)
 
   const handleCreateNew = async (event) => {
     event.preventDefault()
