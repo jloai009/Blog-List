@@ -20,15 +20,12 @@ const Content = (props) => {
     const newBlog = await blogService.create(blogObject)
     if (newBlog !== 400) {
       props.setBlogs(props.blogs.concat(newBlog))
-      props.setNotification("Blog Created")
-      setTimeout(() => props.setNotification(null), 5000)
+      props.handleNotification("Blog Created")
+      setTitle('')
+      setAuthor('')
+      setUrl('')
     } else {
-      props.setErrorOcurred(true)
-      props.setNotification("Error: blogs must have a title and a URL")
-      setTimeout(() => {
-        props.setNotification(null)
-        props.setErrorOcurred(false)
-      }, 5000)
+      props.handleNotification("Error: blogs must have a title and a URL", "Error")
     }
   }
 
