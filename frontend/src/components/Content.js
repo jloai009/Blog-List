@@ -4,11 +4,7 @@ import Showblogs from "./Showblogs"
 import blogService from "../services/blogs"
 
 const Content = (props) => {
-const [blogs, setBlogs] = useState([])
-  const [title, setTitle] = useState('')
-  const [author, setAuthor] = useState('')
-  const [url, setUrl] = useState('')
-
+  const [blogs, setBlogs] = useState([])
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -16,34 +12,7 @@ const [blogs, setBlogs] = useState([])
     )
   }, [])
 
-  const handleCreateNew = async (event) => {
-    event.preventDefault()
-
-    const blogObject = {
-      title: title,
-      author: author,
-      url: url
-    }
-
-    const response = await blogService.create(blogObject)
-    if (response.status === 201) {
-      setBlogs(blogs.concat(response.data))
-      props.handleNotification("Blog Created")
-      setTitle('')
-      setAuthor('')
-      setUrl('')
-    } else {
-      props.handleNotification(response.error, "Error")
-    }
-  }
-
-  const createNewProps = {
-    title, setTitle,
-    author, setAuthor,
-    url, setUrl,
-    handleCreateNew
-  }
-
+  const createNewProps = { blogs, setBlogs, handleNotification: props.handleNotification }
   const showblogsProps = { blogs }
 
   return (
