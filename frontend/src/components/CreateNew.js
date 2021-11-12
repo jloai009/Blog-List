@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react'
 import blogService from '../services/blogs'
 
 const CreateNew = (props) => {
@@ -19,13 +19,13 @@ const CreateNew = (props) => {
     const response = await blogService.create(blogObject)
     if (response.status === 201) {
       props.setBlogs(props.blogs.concat(response.data))
-      props.handleNotification("Blog Created")
+      props.handleNotification('Blog Created')
       setHideForm(true)
       setTitle('')
       setAuthor('')
       setUrl('')
     } else {
-      props.handleNotification(response.message, "Error")
+      props.handleNotification(response.message, 'Error')
     }
   }
 

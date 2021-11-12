@@ -1,7 +1,7 @@
-import React, { useState } from "react"
-import Notification from "./Notification"
-import loginService from "../services/login"
-import blogService from "../services/blogs"
+import React, { useState } from 'react'
+import Notification from './Notification'
+import loginService from '../services/login'
+import blogService from '../services/blogs'
 
 const LoginForm = (props) => {
 
@@ -23,10 +23,10 @@ const LoginForm = (props) => {
       props.setUser(user)
       props.handleNotification('Welcome Back ' + user.username)
     } catch (error) {
-      props.handleNotification('Wrong username or password', "Error")
+      props.handleNotification('Wrong username or password', 'Error')
     }
   }
-  
+
 
   return (
     <div>

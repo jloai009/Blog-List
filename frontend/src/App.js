@@ -28,9 +28,9 @@ const App = () => {
   const handleNotification = (notification, isError=false) => {
     setNotification(notification)
     setTimeout(() => {
-        setNotification(null)
-      }, 5000)
-    
+      setNotification(null)
+    }, 5000)
+
     if (isError) {
       setErrorOcurred(true)
       setTimeout(() => {

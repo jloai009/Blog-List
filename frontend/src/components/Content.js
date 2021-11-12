@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react"
-import CreateNew from "./CreateNew"
-import Showblogs from "./Showblogs"
-import blogService from "../services/blogs"
+import React, { useState, useEffect } from 'react'
+import CreateNew from './CreateNew'
+import Showblogs from './Showblogs'
+import blogService from '../services/blogs'
 
 const Content = (props) => {
   const [blogs, setBlogs] = useState([])
@@ -62,7 +62,7 @@ const Content = (props) => {
       <CreateNew {...createNewProps}/>
       <Showblogs {...showblogsProps}/>
     </div>
-    
+
   )
 }
 
