@@ -17,7 +17,7 @@ const Notification = (props) => {
   }
 
   return (
-    <div>
+    <div id="notification">
       <p style={style}>
         {props.notification}
       </p>
