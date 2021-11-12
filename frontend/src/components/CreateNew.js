@@ -51,6 +51,7 @@ const CreateNew = (props) => {
         <div>
           <label>Title:</label>
           <input
+            id="input-title"
             type="text"
             value={title}
             name="Title"
@@ -60,6 +61,7 @@ const CreateNew = (props) => {
         <div>
           <label>Author:</label>
           <input
+            id="input-author"
             type="text"
             value={author}
             name="Author"
@@ -69,6 +71,7 @@ const CreateNew = (props) => {
         <div>
           <label>URL:</label>
           <input
+            id="input-url"
             type="text"
             value={url}
             name="URL"
@@ -76,7 +79,12 @@ const CreateNew = (props) => {
           />
         </div>
         <div>
-          <button type="submit">Create</button>
+          <button
+            id="button-create"
+            type="submit"
+          >
+            Create
+          </button>
           <button onClick={changeVisPrevDef}>Cancel</button>
         </div>
       </form>
