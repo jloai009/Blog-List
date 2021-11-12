@@ -32,11 +32,16 @@ const Blog = ({ blog, handleLike, handleDelete, user }) => {
   }
 
   const blogInfo = () => (
-    <div>
+    <div className="blog-info">
       <div>{blog.url}</div>
       <div>
-        Likes {blog.likes}&nbsp;
-        <button onClick={() => handleLike(blog.id)}> Like </button>
+        Likes: {blog.likes}&nbsp;
+        <button
+          className="button-like"
+          onClick={() => handleLike(blog.id)}
+        >
+          Like
+        </button>
       </div>
       <div>{blog.user.username}</div>
       {deleteButton()}
@@ -48,7 +53,12 @@ const Blog = ({ blog, handleLike, handleDelete, user }) => {
       <div>
         {blog.title} {blog.author}
         &ensp;
-        <button onClick={toggleShowInfo}> {buttonText} </button>
+        <button
+          className="button-view"
+          onClick={toggleShowInfo}
+        >
+          {buttonText}
+        </button>
       </div>
       {showInfo ? blogInfo() : null }
     </div>
