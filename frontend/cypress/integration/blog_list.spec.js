@@ -74,7 +74,7 @@ describe('Blog app', function() {
       cy.contains('Likes: 1')
     })
 
-    it.only('Blogs are sorted by number of likes', function () {
+    it('Blogs are sorted by number of likes', function () {
       cy.createBlog({ title: 'test title1', author: 'test author1', _url: 'test.url.test1', likes: 0 })
       cy.createBlog({ title: 'test title2', author: 'test author2', _url: 'test.url.test2', likes: 7 })
       cy.createBlog({ title: 'test title3', author: 'test author3', _url: 'test.url.test3', likes: 3 })
